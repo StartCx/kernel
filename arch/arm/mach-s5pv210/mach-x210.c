@@ -53,6 +53,7 @@
 #include <mach/adc.h>
 #include <mach/param.h>
 #include <mach/system.h>
+#include <mach/leds-gpio.h>
 
 #ifdef CONFIG_S3C64XX_DEV_SPI
 #include <plat/s3c64xx-spi.h>
@@ -1757,6 +1758,34 @@ struct platform_device headset_switch_device = {
 	.dev = { .platform_data = &headset_switch_data },
 };
 
+
+
+/*************************LED µÄplatform devices*********************************/
+
+
+static struct s5pv210_led_platdata x210_led1_pdata = {
+	.name		= "led1",
+	.gpio		= S5PV210_GPJ0(3),
+	.flags		= S3C24XX_LEDF_ACTLOW | S3C24XX_LEDF_TRISTATE,
+	.def_trigger	= "",
+};
+
+
+
+static struct platform_device x210_led1 = {
+	.name		= "s5pv210_led",
+	.id		= 1,
+	.dev		= {
+		.platform_data	= &x210_led1_pdata,
+	},
+};
+
+
+
+/*************************LED µÄplatform devices*********************************/
+
+
+
 static struct platform_device *smdkc110_devices[] __initdata = {
 #ifdef CONFIG_FIQ_DEBUGGER
 	&s5pv210_device_fiqdbg_uart2,
@@ -1889,6 +1918,9 @@ static struct platform_device *smdkc110_devices[] __initdata = {
 //	&timed_gpio_device,
 
 	&headset_switch_device,
+
+// czc added
+	x210_led1,
 };
 
 static void __init smdkc110_map_io(void)
