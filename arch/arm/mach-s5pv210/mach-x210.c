@@ -1763,14 +1763,36 @@ struct platform_device headset_switch_device = {
 /*************************LED µÄplatform devices*********************************/
 
 
-static struct s5pv210_led_platdata x210_led1_pdata = {
-	.name		= "led1",
+static struct s5pv210_led_platdata x210_led0_pdata = {
+	.name		= "led0",
 	.gpio		= S5PV210_GPJ0(3),
-	.flags		= S3C24XX_LEDF_ACTLOW | S3C24XX_LEDF_TRISTATE,
+	.flags		= S5PV210_LEDF_ACTLOW | S5PV210_LEDF_TRISTATE,
 	.def_trigger	= "",
 };
 
+static struct s5pv210_led_platdata x210_led1_pdata = {
+	.name		= "led1",
+	.gpio		= S5PV210_GPJ0(4),
+	.flags		= S5PV210_LEDF_ACTLOW | S5PV210_LEDF_TRISTATE,
+	.def_trigger	= "",
+};
 
+static struct s5pv210_led_platdata x210_led2_pdata = {
+	.name		= "led2",
+	.gpio		= S5PV210_GPJ0(5),
+	.flags		= S5PV210_LEDF_ACTLOW | S5PV210_LEDF_TRISTATE,
+	.def_trigger	= "",
+};
+
+/*************************LED µÄplatform devices*********************************/
+
+static struct platform_device x210_led0 = {
+	.name		= "s5pv210_led",
+	.id		= 0,
+	.dev		= {
+		.platform_data	= &x210_led0_pdata,
+	},
+};
 
 static struct platform_device x210_led1 = {
 	.name		= "s5pv210_led",
@@ -1780,7 +1802,13 @@ static struct platform_device x210_led1 = {
 	},
 };
 
-
+static struct platform_device x210_led2 = {
+	.name		= "s5pv210_led",
+	.id		= 2,
+	.dev		= {
+		.platform_data	= &x210_led2_pdata,
+	},
+};
 
 /*************************LED µÄplatform devices*********************************/
 
@@ -1920,7 +1948,9 @@ static struct platform_device *smdkc110_devices[] __initdata = {
 	&headset_switch_device,
 
 // czc added
+	&x210_led0,
 	&x210_led1,
+	&x210_led2,
 };
 
 static void __init smdkc110_map_io(void)
