@@ -1920,7 +1920,7 @@ static struct platform_device *smdkc110_devices[] __initdata = {
 	&headset_switch_device,
 
 // czc added
-	x210_led1,
+	&x210_led1,
 };
 
 static void __init smdkc110_map_io(void)
